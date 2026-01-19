@@ -3,7 +3,7 @@
 {
     "name": "C# (.NET) and PostgreSQL",
     "dockerComposeFile": "docker-compose.yml",
-    "service": "app",
+    "service": "tranga-api",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "customizations": {
         "vscode": {
@@ -11,7 +11,7 @@
                 "ms-dotnettools.csdevkit"
             ]
         }
-    }
+    },
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
@@ -20,7 +20,7 @@
 	// "customizations": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [5000, 5001, 5432],
+	"forwardPorts": [80],
 	// "portsAttributes": {
 	//		"5001": {
 	//			"protocol": "https"
@@ -28,7 +28,7 @@
 	// }
 
     // Use 'postCreateCommand' to run commands after the container is created.
-    // "postCreateCommand": "dotnet --info",
+    "postCreateCommand": "sudo mkdir /usr/share/tranga-api && sudo chown vscode:vscode /usr/share/tranga-api"
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"

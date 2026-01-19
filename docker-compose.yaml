@@ -1,6 +1,6 @@
 services:
   tranga-api:
-    image: glax/tranga-api:latest
+    image: felixfeuerigel/tranga-api:latest
     container_name: tranga-api
     user: "${UID}:${GID}"
     volumes:

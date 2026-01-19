@@ -136,7 +136,9 @@ public class MangaDex : MangaConnector
             string requestUrl =
                 $"https://api.mangadex.org/manga/{mangaId.IdOnConnectorSite}/feed?limit={Limit}&offset={offset}&" +
                 $"translatedLanguage%5B%5D={language}&" +
-                $"contentRating%5B%5D=safe&contentRating%5B%5D=suggestive&contentRating%5B%5D=erotica&includeFutureUpdates=0&includes%5B%5D=";
+                $"contentRating%5B%5D=safe&contentRating%5B%5D=suggestive&contentRating%5B%5D=erotica&"+
+                $"includeFutureUpdates=0&includes%5B%5D=&"+
+                $"includeEmptyPages=0"; // remove entries with no available pages e.g. externally hosted chapters
             offset += Limit;
 
             HttpResponseMessage result = downloadClient.MakeRequest(requestUrl, RequestType.MangaDexFeed).Result;

@@ -36,7 +36,8 @@ Tranga can download Chapters and Metadata from "Scanlation" sites such as
 
 - [MangaDex.org](https://mangadex.org/) (Multilingual)
 - [MangaWorld](https://www.mangaworld.cx) (it)
-- [MangaPark](https://www.mangapark.com) (en)
+- [AsuraComic](https://asurascanz.com) (en) thanks [@yacob841](https://github.com/yacob841)
+- [WeebCentral](https://weebcentral.com/) (en) thanks [@TheyCallMeTravis](https://github.com/TheyCallMeTravis)
 - ❓ Open an [issue](https://github.com/C9Glax/tranga/issues/new?assignees=&labels=New+Connector&projects=&template=new_connector.yml&title=%5BNew+Connector%5D%3A+)
 
 and trigger a library-scan with [Komga](https://komga.org/) and [Kavita](https://www.kavitareader.com/).  
@@ -56,7 +57,7 @@ For available endpoints check `http(s)://<hostedInstance>/swagger` or `API/opena
 
 **This repository** _**does not**_ include a frontend. A frontend can take many forms, such as a website:
 
-[tranga-website](https://github.com/C9Glax/tranga-website) (Original)
+[tranga-website](https://github.com/C9Glax/tranga-website) (Original, if you use the `docker-compose.yaml` in this repo it will spin up an instance for this)
 
 [tranga-yacobGUI](https://github.com/yacob841/tranga-yacobGUI) (Third Party)
 
@@ -69,6 +70,8 @@ Tranga will then package the contents of each chapter in a `.cbz`-archive and pl
 If specified, Tranga will then notify library-Managers such as [Komga](https://komga.org/) and [Kavita](https://www.kavitareader.com/) to trigger a scan for new
 chapters. Tranga can also send notifications to your devices via third-party services such as [Gotify](https://gotify.net/), [Ntfy](https://ntfy.sh/),
 or any other REST Webhook.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Screenshots
 
@@ -92,19 +95,25 @@ The container also spins up a Swagger site at `http://<url>/swagger`.
 
 ## Built With
 
-- ASP.NET
-  - EF Core
+**💙 [Blåhaj](https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/) 🦈**
+- [ASP.NET](https://dotnet.microsoft.com/en-us/apps/aspnet)
+  - [EF Core](https://learn.microsoft.com/en-us/ef/core/)
 - [PostgreSQL](https://www.postgresql.org/about/licence/)
-- [Ngpsql](https://github.com/npgsql/npgsql/blob/main/LICENSE)
+  - [Ngpsql](https://github.com/npgsql/npgsql/blob/main/LICENSE)
 - [Swagger](https://github.com/domaindrivendev/Swashbuckle.AspNetCore/blob/master/LICENSE)
 - [Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md)
 - [Sixlabors.ImageSharp](https://docs-v2.sixlabors.com/articles/imagesharp/index.html#license)
 - [Html Agility Pack (HAP)](https://github.com/zzzprojects/html-agility-pack/blob/master/LICENSE)
+- [Puppeteersharp](https://www.puppeteersharp.com/)
+  - [Puppeteer](https://github.com/puppeteer/puppeteer) 
+  - [Chromium](https://www.chromium.org/Home/)
 - [Soenneker.Utils.String.NeedlemanWunsch](https://github.com/soenneker/soenneker.utils.string.needlemanwunsch/blob/main/LICENSE)
 - [Jikan](https://jikan.moe/)
   - [Jikan.Net](https://github.com/Ervie/jikan.net)
 - [BuildInformation](https://github.com/linkdotnet/BuildInformation)
-- 💙 Blåhaj 🦈
+- [GitInfo](https://github.com/devlooped/GitInfo)
+- [Log4Net](https://logging.apache.org/log4net/index.html)
+- [xUnit](https://xunit.net/index.html?tabs=cs)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,9 +130,12 @@ The container also spins up a Swagger site at `http://<url>/swagger`.
 <!-- GETTING STARTED -->
 ## Getting Started
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Docker
 
-Built for AMD64 (and ARM64, maybe, if it feels like it).
+Built for AMD64.
+Also available for ARM64 and ARMv7 if it feels like it (dependencies aren't always your friend).
 
 An example `docker-compose.yaml` is provided. Mount `/Manga` to wherever you want your chapters (`.cbz`-Archives)
 downloaded (where Komga/Kavita can access them for example).  
@@ -132,123 +144,52 @@ The file also includes [tranga-website](https://github.com/C9Glax/tranga-website
 
 | Environment Variable              | default          | Description                                                                                                      |
 |-----------------------------------|------------------|------------------------------------------------------------------------------------------------------------------|
-| POSTGRES_HOST                     | `tranga-pg:5432` | host-address of postgres database                                                                                |
+| PORT                              | `6531`           | Port for the API Endpoints (Don't change this unless you know what you are doing)                                |
+| POSTGRES_HOST                     | `tranga-pg:5432` | host-address of postgres database (Don't change!)                                                                |
 | POSTGRES_DB                       | `postgres`       | name of database                                                                                                 |
 | POSTGRES_USER                     | `postgres`       | username used for database authentication                                                                        |
 | POSTGRES_PASSWORD                 | `postgres`       | password used for database authentication                                                                        |
-| DOWNLOAD_LOCATION                 | `/Manga`         | Target-Directory for Downloads (Container path!)                                                                 |
+| DOWNLOAD_LOCATION                 | `/Manga`         | Target-Directory for Downloads (Path inside the container! Don't change!)                                        |
 | FLARESOLVERR_URL                  | <empty>          | URL of Flaresolverr-Instance                                                                                     |
 | POSTGRES_COMMAND_TIMEOUT          | `60`             | [Timeout of Postgres-commands](https://www.npgsql.org/doc/connection-string-parameters.html?q=Command%20Timeout) |
 | POSTGRES_CONNECTION_TIMEOUT       | `30`             | Timeout for postgres-databaes connection                                                                         |
-| CHECK_CHAPTERS_BEFORE_START       | `true`           | Whether to update database downloaded chapters column                                                            |
+| CHECK_CHAPTERS_BEFORE_START       | `true`           | Whether to update database downloaded chapters column on startup (takes a while)                                 |
 | MATCH_EXACT_CHAPTER_NAME          | `true`           | Match the stored filename exactly with the filename on disk when checking if a chapter is downloaded             |
 | CREATE_COMICINFO_XML              | `true`           | Whether to include ComicInfo.xml in .cbz-Archives                                                                |
 | ALWAYS_INCLUDE_VOLUME_IN_FILENAME | `false`          | Override to always include a volume in filenames (default as `Vol. 0`)                                           |
 | HTTP_REQUEST_TIMEOUT              | `10`             | Request timeout for Mangaconnectors                                                                              |
-| REQUESTS_PER_MINUTE               | `90`             | Maximum requests per minute for Mangaconnectors                                                                  |
+| REQUESTS_PER_MINUTE               | `90`             | Maximum requests per minute for Mangaconnectors (Don't change)                                                   |
 | MINUTES_BETWEEN_NOTIFICATIONS     | `1`              | Interval at which Tranga checks if notifications need to be sent.                                                |
 | HOURS_BETWEEN_NEW_CHAPTERS_CHECK  | `3`              | Interval at which Tranga checks if there are new chapters for a manga                                            |
+| WORKER_TIMEOUT                    | `600`            | Seconds a worker can take before being forcefully cancelled                                                      |
 
 ### Bare-Metal
 
-While not supported/currently built, Tranga should also run Bare-Metal without issue.
+While not intended, if your machine can run .NET (and is AMD64, ARM64, ARMv7), it can run Tranga without docker.
 
-Configuration-Files will be stored per OS:
+Configuration-Files are stored at
 - Linux `/usr/share/tranga-api`
 - Windows `%appdata%/tranga-api`
 
-Downloads (default) are stored in - but this can be configured in `settings.json` (which will be generated on first after first launch):
+Downloads (default) are stored in (see `DOWNLOAD_LOCATION`)
 - Linux `/Manga`
 - Windows `%currentDirectory%/Downloads`
 
 ### Prerequisits
 
-[.NET-Core 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+[.NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 
 <!-- CONTRIBUTING -->
 ## Contributing
 
 If you want to contribute, please feel free to fork and create a Pull-Request!
 
-### General rules
-
-- Strong-type your variables. This improves readability.
-    - **DO**
-      ```csharp
-      Manga[] zyx = Object.GetAnotherThing(); //I can see that zyx is an Array, without digging through more code
-      ```
-    - **DO _NOT_**
-      ```csharp
-      var xyz = Object.GetSomething(); //What is xyz? An Array? A string? An object?
-      ```
-
-- Indent your `if` and `for` blocks
-    - **DO**
-      ```csharp
-      if(true)
-        return false;
-      ```
-    - **DO _NOT_**
-      ```csharp
-      if(true) return false;
-      ```
-      <details>
-        <summary>Because try reading this</summary>
-      
-        ```csharp
-        if (s.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || s.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) return s;
-        ```
-
-      </details>
-
-- When using shorthand, _this_ improves readability for longer lines (at some point just use if-else...):
-```csharp
-bool retVal = xyz is true
-    ? false
-    : true;
-```
-```csharp
-bool retVal = xyz?
-    ?? abc?
-    ?? true;
-```
-
-### Database and EF Core
-
-Tranga is using a **code-first** EF-Core approach. If you modify the database(context) structure you need to create a migration.
-
-###### Configuration Environment-Variables:
-
-| variable          | default-value    |
-|-------------------|------------------|
-| POSTGRES_HOST     | `tranga-pg:5432` |
-| POSTGRES_DB       | `postgres`       |
-| POSTGRES_USER     | `postgres`       |
-| POSTGRES_PASSWORD | `postgres`       |
-
-### A broad overview of where is what:
-
-![Image](DB-Layout.png)
-
-- `Program.cs` Configuration for ASP.NET, Swagger (also in `NamedSwaggerGenOptions.cs`)
-- `Tranga.cs` Worker-Logic
-- `Schema/**` Entity-Framework Schema Definitions
-- `MangaDownloadClients/**` Networking-Clients for Scraping
-- `Controllers/**` ASP.NET Controllers (Endpoints)
-
-##### If you want to add a new Website-Connector:
-
-1. Copy one of the existing connectors, or start from scratch and inherit from `API.Schema.MangaConnectors.MangaConnector`.
-2. Add the new Connector as Object-Instance in `Tranga.cs` to the MangaConnector-Array `connectors`.
-
-### How to test locally
-
-In the Project root a `docker-compose.local.yaml` file will compile the code and create the container(s).
+Please read [CONTRIBUTING](CONTRIBUTING.md)
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the GNU GPLv3  License. See [LICENSE.txt](https://github.com/C9Glax/tranga/blob/master/LICENSE.txt) for more information.
+Distributed under the GNU GPLv3  License. See [LICENSE](https://github.com/C9Glax/tranga/blob/main/LICENSE) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
